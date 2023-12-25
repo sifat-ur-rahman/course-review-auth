@@ -15,23 +15,26 @@ const DetailsSchema = new Schema<TDetails>({
   level: { type: String, required: true },
   description: { type: String, required: true },
 });
-const courseSchema = new Schema<TCourse, CourseModel, CourseMethods>({
-  title: { type: String, required: true },
-  instructor: { type: String, required: true },
-  categoryId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true,
+const courseSchema = new Schema<TCourse, CourseModel, CourseMethods>(
+  {
+    title: { type: String, required: true },
+    instructor: { type: String, required: true },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
+    price: { type: Number, required: true },
+    tags: { type: [TagsSchema], required: true },
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
+    language: { type: String, required: true },
+    provider: { type: String, required: true },
+    details: { type: DetailsSchema, required: true },
+    durationInWeeks: { type: Number, default: 0 },
   },
-  price: { type: Number, required: true },
-  tags: { type: [TagsSchema], required: true },
-  startDate: { type: String, required: true },
-  endDate: { type: String, required: true },
-  language: { type: String, required: true },
-  provider: { type: String, required: true },
-  details: { type: DetailsSchema, required: true },
-  durationInWeeks: { type: Number, default: 0 },
-});
+  { timestamps: true },
+);
 
 courseSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
