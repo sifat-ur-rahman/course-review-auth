@@ -63,7 +63,10 @@ const getBestReviewFromDB = async () => {
     }
   }
 
-  const course = await Course.findOne({ _id: maxCourseId });
+  const course = await Course.findOne({ _id: maxCourseId }).populate(
+    'createdBy',
+    '_id username email role',
+  );
 
   const result = {
     course,

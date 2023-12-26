@@ -70,7 +70,7 @@ const getAllCourseFromDB = (query) => __awaiter(void 0, void 0, void 0, function
     }
     const skip = (page - 1) * limit;
     const courses = yield course_model_1.Course.find(searchTerm)
-        .populate('createdBy')
+        .populate('createdBy', '_id username email role')
         .sort(sort)
         .skip(skip)
         .limit(limit)
@@ -86,8 +86,8 @@ const getAllCourseFromDB = (query) => __awaiter(void 0, void 0, void 0, function
     };
 });
 const getOneCourseWithReviewFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const course = yield course_model_1.Course.findById(id);
-    const reviews = yield review_model_1.Review.find({ courseId: id });
+    const course = yield course_model_1.Course.findById(id).populate('createdBy', '_id username email role');
+    const reviews = yield review_model_1.Review.find({ courseId: id }).populate('createdBy', '_id username email role');
     const result = {
         course,
         reviews,
@@ -133,7 +133,7 @@ const updateCourseFromDB = (id, updatedCourseData) => __awaiter(void 0, void 0, 
     const result = yield course_model_1.Course.findByIdAndUpdate(id, modifiedUpdatedData, {
         new: true,
         runValidators: true,
-    });
+    }).populate('createdBy', '_id username email role');
     return result;
 });
 exports.CourseService = {

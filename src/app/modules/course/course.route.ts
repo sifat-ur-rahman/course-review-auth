@@ -18,6 +18,10 @@ router.get(
   CourseControllers.getOneCourseWithReview,
 );
 
-router.put('/api/courses/:courseId', CourseControllers.updateCourse);
+router.put(
+  '/api/courses/:courseId',
+  auth('admin'),
+  CourseControllers.updateCourse,
+);
 
 export const CourseRoute = router;

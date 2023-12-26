@@ -52,7 +52,7 @@ const getBestReviewFromDB = () => __awaiter(void 0, void 0, void 0, function* ()
             count = averageRatingsObj[courseId].count;
         }
     }
-    const course = yield course_model_1.Course.findOne({ _id: maxCourseId });
+    const course = yield course_model_1.Course.findOne({ _id: maxCourseId }).populate('createdBy', '_id username email role');
     const result = {
         course,
         averageRating: maxRating,

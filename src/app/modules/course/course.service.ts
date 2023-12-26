@@ -78,7 +78,7 @@ const getAllCourseFromDB = async (query: Record<string, unknown>) => {
   const skip = (page - 1) * limit;
 
   const courses = await Course.find(searchTerm)
-    .populate('createdBy')
+    .populate('createdBy', '_id username email role')
     .sort(sort)
     .skip(skip)
     .limit(limit)
@@ -95,8 +95,14 @@ const getAllCourseFromDB = async (query: Record<string, unknown>) => {
   };
 };
 const getOneCourseWithReviewFromDB = async (id: string) => {
-  const course = await Course.findById(id);
-  const reviews = await Review.find({ courseId: id });
+  const course = await Course.findById(id).populate(
+    'createdBy',
+    '_id username email role',
+  );
+  const reviews = await Review.find({ courseId: id }).populate(
+    'createdBy',
+    '_id username email role',
+  );
 
   const result = {
     course,
@@ -165,7 +171,7 @@ const updateCourseFromDB = async (
   const result = await Course.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
     runValidators: true,
-  });
+  }).populate('createdBy', '_id username email role');
 
   return result;
 };

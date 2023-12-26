@@ -13,5 +13,5 @@ const router = express_1.default.Router();
 router.post('/api/courses', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(course_validation_1.courseValidation.courseValidationSchema), course_controller_1.CourseControllers.createCourse);
 router.get('/api/courses', course_controller_1.CourseControllers.getAllCourse);
 router.get('/api/courses/:courseId/reviews', course_controller_1.CourseControllers.getOneCourseWithReview);
-router.put('/api/courses/:courseId', course_controller_1.CourseControllers.updateCourse);
+router.put('/api/courses/:courseId', (0, auth_1.default)('admin'), course_controller_1.CourseControllers.updateCourse);
 exports.CourseRoute = router;
