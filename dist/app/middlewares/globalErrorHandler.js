@@ -39,7 +39,7 @@ const globalErrorHandler = (error, req, res, next) => {
         errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
     }
     else if ((error === null || error === void 0 ? void 0 : error.name) === 'JsonWebTokenError') {
-        message = error.message;
+        message = 'Unauthorized Access';
         errorSources =
             'You do not have the necessary permissions to access this resource.';
         errorDetails = null;
