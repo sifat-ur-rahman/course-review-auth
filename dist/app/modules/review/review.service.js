@@ -13,17 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewService = void 0;
-/* eslint-disable no-undef */
-/* eslint-disable no-prototype-builtins */
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const course_model_1 = require("../course/course.model");
 const review_model_1 = require("./review.model");
-const createReviewIntoDB = (Data) => __awaiter(void 0, void 0, void 0, function* () {
-    const course = yield course_model_1.Course.findById(Data.courseId);
+const createReviewIntoDB = (userData, reviewData) => __awaiter(void 0, void 0, void 0, function* () {
+    const course = yield course_model_1.Course.findById(reviewData.courseId);
     if (!course) {
-        throw new AppError_1.default(400, `${Data.courseId} no course with courseId`);
+        throw new AppError_1.default(400, `${reviewData.courseId} no course with courseId`);
     }
-    const result = yield review_model_1.Review.create(Data);
+    const saveData = Object.assign(Object.assign({}, reviewData), { createdBy: userData.userId });
+    const result = yield (yield review_model_1.Review.create(saveData)).populate('createdBy', '_id username email role');
     return result;
 });
 const getBestReviewFromDB = () => __awaiter(void 0, void 0, void 0, function* () {

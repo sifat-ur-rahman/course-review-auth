@@ -6,7 +6,7 @@ import { userControllers } from './user.controller';
 const router = express.Router();
 
 router.post(
-  '/auth/register',
+  '/api/auth/register',
   validateRequest(userValidationSchema),
   userControllers.createUserRegistration,
 );

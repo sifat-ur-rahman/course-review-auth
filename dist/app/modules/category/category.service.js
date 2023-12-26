@@ -21,7 +21,7 @@ const createCategoryIntoDB = (userData, Data) => __awaiter(void 0, void 0, void 
     return result;
 });
 const getAllCategoryFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield category_model_1.Category.find().populate('createdBy');
+    const result = yield category_model_1.Category.find().populate('createdBy', '_id username email role');
     return result;
 });
 exports.CategoryService = {

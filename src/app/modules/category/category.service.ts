@@ -14,7 +14,10 @@ const createCategoryIntoDB = async (userData: JwtPayload, Data: any) => {
   return result;
 };
 const getAllCategoryFromDB = async () => {
-  const result = await Category.find().populate('createdBy');
+  const result = await Category.find().populate(
+    'createdBy',
+    '_id username email role',
+  );
   return result;
 };
 

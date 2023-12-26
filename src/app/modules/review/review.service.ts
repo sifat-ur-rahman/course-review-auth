@@ -1,16 +1,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-prototype-builtins */
+import { JwtPayload } from 'jsonwebtoken';
 import AppError from '../../errors/AppError';
 import { Course } from '../course/course.model';
 import { ReviewDocument, TReview } from './review.interface';
 import { Review } from './review.model';
 
-const createReviewIntoDB = async (Data: TReview) => {
-  const course = await Course.findById(Data.courseId);
+const createReviewIntoDB = async (
+  userData: JwtPayload,
+  reviewData: TReview,
+) => {
+  const course = await Course.findById(reviewData.courseId);
   if (!course) {
-    throw new AppError(400, `${Data.courseId} no course with courseId`);
+    throw new AppError(400, `${reviewData.courseId} no course with courseId`);
   }
-  const result = await Review.create(Data);
+  const saveData = {
+    ...reviewData,
+    createdBy: userData.userId,
+  };
+
+  const result = await (
+    await Review.create(saveData)
+  ).populate('createdBy', '_id username email role');
   return result;
 };
 

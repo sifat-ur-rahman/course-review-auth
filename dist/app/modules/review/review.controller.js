@@ -14,7 +14,7 @@ const review_service_1 = require("./review.service");
 const createReview = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewData = req.body;
-        const result = yield review_service_1.ReviewService.createReviewIntoDB(reviewData);
+        const result = yield review_service_1.ReviewService.createReviewIntoDB(req.user, reviewData);
         res.status(201).json({
             success: true,
             statusCode: 201,
