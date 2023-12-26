@@ -13,7 +13,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // checking if the token is missing
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
     }
 
     // checking if the given token is valid

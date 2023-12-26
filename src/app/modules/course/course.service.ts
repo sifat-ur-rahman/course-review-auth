@@ -15,6 +15,7 @@ const createCourseIntoDB = async (
     throw new AppError(
       400,
       `${courseData.categoryId} no category with categoryId`,
+      null,
     );
   }
   const saveData = {

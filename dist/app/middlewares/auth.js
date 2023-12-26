@@ -23,7 +23,7 @@ const auth = (...requiredRoles) => {
         const token = req.headers.authorization;
         // checking if the token is missing
         if (!token) {
-            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, 'You are not authorized!');
+            throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found!');
         }
         // checking if the given token is valid
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_access_secret);

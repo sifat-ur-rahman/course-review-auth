@@ -31,7 +31,7 @@ const course_model_1 = require("./course.model");
 const createCourseIntoDB = (userData, courseData) => __awaiter(void 0, void 0, void 0, function* () {
     const category = yield category_model_1.Category.findById(courseData.categoryId);
     if (!category) {
-        throw new AppError_1.default(400, `${courseData.categoryId} no category with categoryId`);
+        throw new AppError_1.default(400, `${courseData.categoryId} no category with categoryId`, null);
     }
     const saveData = Object.assign(Object.assign({}, courseData), { createdBy: userData.userId });
     const result = yield course_model_1.Course.create(saveData);

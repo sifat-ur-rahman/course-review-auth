@@ -18,6 +18,8 @@ const globalErrorHandler = (error, req, res, next) => {
             message: 'Something went wrong',
         },
     ];
+    let errorDetails = error;
+    let stack = error === null || error === void 0 ? void 0 : error.stack;
     if (error instanceof zod_1.ZodError) {
         const simplifiedError = (0, handleZodError_1.default)(error);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
@@ -36,6 +38,13 @@ const globalErrorHandler = (error, req, res, next) => {
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
         errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
     }
+    else if ((error === null || error === void 0 ? void 0 : error.name) === 'JsonWebTokenError') {
+        message = error.message;
+        errorSources =
+            'You do not have the necessary permissions to access this resource.';
+        errorDetails = null;
+        stack = null;
+    }
     else if ((error === null || error === void 0 ? void 0 : error.code) === 11000) {
         const simplifiedError = (0, handleDuplicateError_1.default)(error);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
@@ -46,6 +55,8 @@ const globalErrorHandler = (error, req, res, next) => {
         statusCode = error === null || error === void 0 ? void 0 : error.statusCode;
         message = error.message;
         errorSources = error === null || error === void 0 ? void 0 : error.message;
+        errorDetails = null;
+        stack = null;
     }
     else if (error instanceof Error) {
         message = error.message;
@@ -61,8 +72,8 @@ const globalErrorHandler = (error, req, res, next) => {
         success: false,
         message,
         errorMessage: errorSources,
-        errorDetails: error,
-        stack: error === null || error === void 0 ? void 0 : error.stack,
+        errorDetails,
+        stack,
     });
 };
 exports.default = globalErrorHandler;
