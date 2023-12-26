@@ -32,6 +32,7 @@ const courseSchema = new Schema<TCourse, CourseModel, CourseMethods>(
     provider: { type: String, required: true },
     details: { type: DetailsSchema, required: true },
     durationInWeeks: { type: Number, default: 0 },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true },
 );

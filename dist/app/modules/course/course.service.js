@@ -24,17 +24,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseService = void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const category_model_1 = require("../category/category.model");
 const review_model_1 = require("../review/review.model");
 const course_model_1 = require("./course.model");
-const createCourseIntoDB = (Data) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = yield category_model_1.Category.findById(Data.categoryId);
+const createCourseIntoDB = (userData, courseData) => __awaiter(void 0, void 0, void 0, function* () {
+    const category = yield category_model_1.Category.findById(courseData.categoryId);
     if (!category) {
-        throw new AppError_1.default(400, `${Data.categoryId} no category with categoryId`);
+        throw new AppError_1.default(400, `${courseData.categoryId} no category with categoryId`);
     }
-    const result = yield course_model_1.Course.create(Data);
+    const saveData = Object.assign(Object.assign({}, courseData), { createdBy: userData.userId });
+    const result = yield course_model_1.Course.create(saveData);
     return result;
 });
 const getAllCourseFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,6 +70,7 @@ const getAllCourseFromDB = (query) => __awaiter(void 0, void 0, void 0, function
     }
     const skip = (page - 1) * limit;
     const courses = yield course_model_1.Course.find(searchTerm)
+        .populate('createdBy')
         .sort(sort)
         .skip(skip)
         .limit(limit)

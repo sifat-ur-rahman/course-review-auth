@@ -1,16 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { JwtPayload } from 'jsonwebtoken';
 import AppError from '../../errors/AppError';
 import { Category } from '../category/category.model';
 import { Review } from '../review/review.model';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
-const createCourseIntoDB = async (Data: TCourse) => {
-  const category = await Category.findById(Data.categoryId);
+const createCourseIntoDB = async (
+  userData: JwtPayload,
+  courseData: TCourse,
+) => {
+  const category = await Category.findById(courseData.categoryId);
   if (!category) {
-    throw new AppError(400, `${Data.categoryId} no category with categoryId`);
+    throw new AppError(
+      400,
+      `${courseData.categoryId} no category with categoryId`,
+    );
   }
-  const result = await Course.create(Data);
+  const saveData = {
+    ...courseData,
+    createdBy: userData.userId,
+  };
+
+  const result = await Course.create(saveData);
 
   return result;
 };
@@ -66,6 +78,7 @@ const getAllCourseFromDB = async (query: Record<string, unknown>) => {
   const skip = (page - 1) * limit;
 
   const courses = await Course.find(searchTerm)
+    .populate('createdBy')
     .sort(sort)
     .skip(skip)
     .limit(limit)

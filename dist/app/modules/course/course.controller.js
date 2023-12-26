@@ -13,8 +13,8 @@ exports.CourseControllers = void 0;
 const course_service_1 = require("./course.service");
 const createCourse = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userData = req.body;
-        const result = yield course_service_1.CourseService.createCourseIntoDB(userData);
+        const courseData = req.body;
+        const result = yield course_service_1.CourseService.createCourseIntoDB(req.user, courseData);
         res.status(201).json({
             success: true,
             statusCode: 201,

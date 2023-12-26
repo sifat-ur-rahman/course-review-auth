@@ -35,6 +35,7 @@ const courseSchema = new mongoose_1.Schema({
     provider: { type: String, required: true },
     details: { type: DetailsSchema, required: true },
     durationInWeeks: { type: Number, default: 0 },
+    createdBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 courseSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

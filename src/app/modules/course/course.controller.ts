@@ -7,9 +7,9 @@ const createCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const userData = req.body;
+    const courseData = req.body;
 
-    const result = await CourseService.createCourseIntoDB(userData);
+    const result = await CourseService.createCourseIntoDB(req.user, courseData);
 
     res.status(201).json({
       success: true,
