@@ -10,13 +10,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryService = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const category_model_1 = require("./category.model");
-const createCategoryIntoDB = (Data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield category_model_1.Category.create(Data);
+const createCategoryIntoDB = (userData, Data) => __awaiter(void 0, void 0, void 0, function* () {
+    const saveData = {
+        createdBy: userData.userId,
+        name: Data.name,
+    };
+    const result = yield category_model_1.Category.create(saveData);
     return result;
 });
 const getAllCategoryFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield category_model_1.Category.find();
+    const result = yield category_model_1.Category.find().populate('createdBy');
     return result;
 });
 exports.CategoryService = {

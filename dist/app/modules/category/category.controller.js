@@ -14,7 +14,7 @@ const category_service_1 = require("./category.service");
 const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const categoryData = req.body;
-        const result = yield category_service_1.CategoryService.createCategoryIntoDB(categoryData);
+        const result = yield category_service_1.CategoryService.createCategoryIntoDB(req.user, categoryData);
         res.status(201).json({
             success: true,
             statusCode: 201,

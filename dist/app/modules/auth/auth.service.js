@@ -34,8 +34,14 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         role: user.role,
     };
     const token = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, '10d');
+    const respondData = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+    };
     return {
-        user,
+        user: respondData,
         token,
     };
 });

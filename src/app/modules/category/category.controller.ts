@@ -8,7 +8,10 @@ const createCategory = async (
 ) => {
   try {
     const categoryData = req.body;
-    const result = await CategoryService.createCategoryIntoDB(categoryData);
+    const result = await CategoryService.createCategoryIntoDB(
+      req.user,
+      categoryData,
+    );
 
     res.status(201).json({
       success: true,

@@ -31,9 +31,14 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_access_secret as string,
     '10d',
   );
-
+  const respondData = {
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+  };
   return {
-    user,
+    user: respondData,
     token,
   };
 };
