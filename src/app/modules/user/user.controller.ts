@@ -21,24 +21,6 @@ const createUserRegistration = async (
   }
 };
 
-// const getBestReview = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const result = await ReviewService.getBestReviewFromDB();
-//     res.status(200).json({
-//       success: true,
-//       statusCode: 200,
-//       message: 'Best course retrieved successfully',
-//       data: result,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 export const userControllers = {
   createUserRegistration,
 };

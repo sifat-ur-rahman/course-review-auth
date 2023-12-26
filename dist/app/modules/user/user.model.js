@@ -17,9 +17,9 @@ const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../config"));
 const userSchema = new mongoose_1.Schema({
-    username: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, select: 0 },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
 }, { timestamps: true });
 userSchema.pre('save', function (next) {
@@ -36,4 +36,14 @@ userSchema.method('toJSON', function () {
     delete data.password;
     return data;
 });
+userSchema.statics.isUserExistsByUserName = function (username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield exports.User.findOne({ username }).select('+password');
+    });
+};
+userSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(plainTextPassword, hashedPassword);
+    });
+};
 exports.User = (0, mongoose_1.model)('User', userSchema);

@@ -1,13 +1,13 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { TUser } from './user.interface';
+import { TUser, UserModel } from './user.interface';
 import config from '../../config';
 
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser, UserModel>(
   {
-    username: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, select: 0 },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
   },
   { timestamps: true },
@@ -31,4 +31,15 @@ userSchema.method('toJSON', function () {
 
   return data;
 });
-export const User = model<TUser>('User', userSchema);
+
+userSchema.statics.isUserExistsByUserName = async function (username: string) {
+  return await User.findOne({ username }).select('+password');
+};
+
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+export const User = model<TUser, UserModel>('User', userSchema);

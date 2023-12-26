@@ -10,6 +10,7 @@ const review_route_1 = require("./app/modules/review/review.route");
 const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalErrorHandler"));
 const course_route_1 = require("./app/modules/course/course.route");
 const user_route_1 = require("./app/modules/user/user.route");
+const auth_route_1 = require("./app/modules/auth/auth.route");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -18,6 +19,7 @@ app.use('/', course_route_1.CourseRoute);
 app.use('/', category_route_1.CategoryRoute);
 app.use('/', review_route_1.ReviewRoute);
 app.use('/', user_route_1.UserRoute);
+app.use('/', auth_route_1.AuthRoutes);
 app.get('/', (req, res) => {
     res.status(200).json({
         success: true,

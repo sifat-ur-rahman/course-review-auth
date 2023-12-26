@@ -6,6 +6,7 @@ import { ReviewRoute } from './app/modules/review/review.route';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import { CourseRoute } from './app/modules/course/course.route';
 import { UserRoute } from './app/modules/user/user.route';
+import { AuthRoutes } from './app/modules/auth/auth.route';
 
 const app: Application = express();
 
@@ -18,6 +19,7 @@ app.use('/', CourseRoute);
 app.use('/', CategoryRoute);
 app.use('/', ReviewRoute);
 app.use('/', UserRoute);
+app.use('/', AuthRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({

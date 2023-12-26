@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userControllers = void 0;
-const user_service_1 = require("./user.service");
-const createUserRegistration = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.AuthControllers = void 0;
+const auth_service_1 = require("./auth.service");
+const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewData = req.body;
-        const result = yield user_service_1.userService.userRegistrationIntoDB(reviewData);
-        res.status(201).json({
+        const result = yield auth_service_1.AuthServices.loginUser(reviewData);
+        res.status(200).json({
             success: true,
-            statusCode: 201,
-            message: 'User registered successfully',
+            statusCode: 200,
+            message: 'User login successful',
             data: result,
         });
     }
@@ -26,6 +26,6 @@ const createUserRegistration = (req, res, next) => __awaiter(void 0, void 0, voi
         next(err);
     }
 });
-exports.userControllers = {
-    createUserRegistration,
+exports.AuthControllers = {
+    loginUser,
 };
