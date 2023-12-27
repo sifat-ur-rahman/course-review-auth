@@ -26,6 +26,22 @@ const createUserRegistration = (req, res, next) => __awaiter(void 0, void 0, voi
         next(err);
     }
 });
+const changePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const passwordData = req.body;
+        const result = yield user_service_1.userService.changePasswordIntoDB(req.user, passwordData);
+        res.status(201).json({
+            success: true,
+            statusCode: 201,
+            message: 'Password changed successfully',
+            data: result,
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
 exports.userControllers = {
     createUserRegistration,
+    changePassword,
 };

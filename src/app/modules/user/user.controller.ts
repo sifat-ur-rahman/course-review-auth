@@ -20,7 +20,30 @@ const createUserRegistration = async (
     next(err);
   }
 };
+const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const passwordData = req.body;
+    const result = await userService.changePasswordIntoDB(
+      req.user,
+      passwordData,
+    );
+
+    res.status(201).json({
+      success: true,
+      statusCode: 201,
+      message: 'Password changed successfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const userControllers = {
   createUserRegistration,
+  changePassword,
 };

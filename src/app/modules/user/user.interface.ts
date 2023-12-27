@@ -7,6 +7,10 @@ export type TUser = {
   email: string;
   password: string;
   role: 'admin' | 'user';
+  passwordHistory: {
+    password: string;
+    timestamp: Date;
+  }[];
 };
 
 export interface UserModel extends Model<TUser> {

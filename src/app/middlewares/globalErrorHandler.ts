@@ -51,7 +51,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   } else if (error instanceof AppError) {
     statusCode = error?.statusCode;
     message = error.message;
-    errorSources = error?.message;
+    errorSources = '';
     errorDetails = null;
     stack = null;
   } else if (error instanceof Error) {
