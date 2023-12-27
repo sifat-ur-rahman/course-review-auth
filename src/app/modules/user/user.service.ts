@@ -46,20 +46,22 @@ const changePasswordIntoDB = async (
       lastUsedPasswordTimestamp,
     ).toLocaleString();
 
-    return {
-      success: false,
-      statusCode: 400,
-      message: `Password change failed. Ensure the new password is unique and not among the last 2 used (last used on ${formattedTimestamp}).`,
-      data: null,
-    };
+    return { formattedTimestamp };
   }
   user.password = newPassword;
   user.passwordHistory.push({ password: newPassword, timestamp: new Date() });
 
   // Save the updated user to the database
   await user.save();
-
-  return user;
+  const responseData = {
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+  return responseData;
 };
 export const userService = {
   userRegistrationIntoDB,

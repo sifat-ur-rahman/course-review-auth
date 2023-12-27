@@ -30,9 +30,18 @@ const changePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     try {
         const passwordData = req.body;
         const result = yield user_service_1.userService.changePasswordIntoDB(req.user, passwordData);
-        res.status(201).json({
+        const timestamp = result.formattedTimestamp;
+        if (timestamp) {
+            res.status(201).send({
+                success: false,
+                statusCode: 400,
+                message: `error${timestamp}`,
+                data: null,
+            });
+        }
+        res.status(200).json({
             success: true,
-            statusCode: 201,
+            statusCode: 200,
             message: 'Password changed successfully',
             data: result,
         });

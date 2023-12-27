@@ -40,18 +40,21 @@ const changePasswordIntoDB = (userData, passwordData) => __awaiter(void 0, void 
     if (!isUniquePassword) {
         const lastUsedPasswordTimestamp = user.passwordHistory.slice(-1)[0].timestamp;
         const formattedTimestamp = new Date(lastUsedPasswordTimestamp).toLocaleString();
-        return {
-            success: false,
-            statusCode: 400,
-            message: `Password change failed. Ensure the new password is unique and not among the last 2 used (last used on ${formattedTimestamp}).`,
-            data: null,
-        };
+        return { formattedTimestamp };
     }
     user.password = newPassword;
     user.passwordHistory.push({ password: newPassword, timestamp: new Date() });
     // Save the updated user to the database
     yield user.save();
-    return user;
+    const responseData = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+    };
+    return responseData;
 });
 exports.userService = {
     userRegistrationIntoDB,

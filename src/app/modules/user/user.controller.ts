@@ -31,10 +31,18 @@ const changePassword = async (
       req.user,
       passwordData,
     );
-
-    res.status(201).json({
+    const timestamp = result.formattedTimestamp;
+    if (timestamp) {
+      res.status(201).send({
+        success: false,
+        statusCode: 400,
+        message: `error${timestamp}`,
+        data: null,
+      });
+    }
+    res.status(200).json({
       success: true,
-      statusCode: 201,
+      statusCode: 200,
       message: 'Password changed successfully',
       data: result,
     });
