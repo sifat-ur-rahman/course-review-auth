@@ -4,7 +4,6 @@ import { JwtPayload } from 'jsonwebtoken';
 import AppError from '../../errors/AppError';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-//import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 
 const userRegistrationIntoDB = async (Data: TUser) => {

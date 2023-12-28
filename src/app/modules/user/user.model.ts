@@ -29,6 +29,7 @@ userSchema.method('toJSON', function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = this.toObject();
   delete data.password;
+  delete data.passwordHistory;
 
   return data;
 });

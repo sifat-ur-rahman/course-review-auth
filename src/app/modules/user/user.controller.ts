@@ -7,8 +7,8 @@ const createUserRegistration = async (
   next: NextFunction,
 ) => {
   try {
-    const reviewData = req.body;
-    const result = await userService.userRegistrationIntoDB(reviewData);
+    const userData = req.body;
+    const result = await userService.userRegistrationIntoDB(userData);
 
     res.status(201).json({
       success: true,
@@ -33,10 +33,10 @@ const changePassword = async (
     );
     const timestamp = result.formattedTimestamp;
     if (timestamp) {
-      res.status(201).send({
+      res.status(400).send({
         success: false,
         statusCode: 400,
-        message: `error${timestamp}`,
+        message: `Password change failed. Ensure the new password is unique and not among the last 2 used (last used on ${timestamp}).`,
         data: null,
       });
     }

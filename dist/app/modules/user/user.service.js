@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const user_model_1 = require("./user.model");
-//import bcrypt from 'bcrypt';
 const http_status_1 = __importDefault(require("http-status"));
 const userRegistrationIntoDB = (Data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.User.create(Data);

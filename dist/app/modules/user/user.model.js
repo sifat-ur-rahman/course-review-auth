@@ -35,6 +35,7 @@ userSchema.method('toJSON', function () {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data = this.toObject();
     delete data.password;
+    delete data.passwordHistory;
     return data;
 });
 userSchema.statics.isUserExistsByUserName = function (username) {

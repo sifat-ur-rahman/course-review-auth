@@ -13,8 +13,8 @@ exports.userControllers = void 0;
 const user_service_1 = require("./user.service");
 const createUserRegistration = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const reviewData = req.body;
-        const result = yield user_service_1.userService.userRegistrationIntoDB(reviewData);
+        const userData = req.body;
+        const result = yield user_service_1.userService.userRegistrationIntoDB(userData);
         res.status(201).json({
             success: true,
             statusCode: 201,
@@ -32,10 +32,10 @@ const changePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         const result = yield user_service_1.userService.changePasswordIntoDB(req.user, passwordData);
         const timestamp = result.formattedTimestamp;
         if (timestamp) {
-            res.status(201).send({
+            res.status(400).send({
                 success: false,
                 statusCode: 400,
-                message: `error${timestamp}`,
+                message: `Password change failed. Ensure the new password is unique and not among the last 2 used (last used on ${timestamp}).`,
                 data: null,
             });
         }
