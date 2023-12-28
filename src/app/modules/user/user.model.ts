@@ -16,7 +16,7 @@ const userSchema = new Schema<TUser, UserModel>(
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this; // doc
-
+  user.passwordHistory.push({ password: user.password, timestamp: new Date() });
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),

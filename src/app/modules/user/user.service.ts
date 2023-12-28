@@ -8,6 +8,7 @@ import httpStatus from 'http-status';
 
 const userRegistrationIntoDB = async (Data: TUser) => {
   const result = await User.create(Data);
+
   return result;
 };
 

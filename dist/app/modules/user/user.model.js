@@ -27,6 +27,7 @@ userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const user = this; // doc
+        user.passwordHistory.push({ password: user.password, timestamp: new Date() });
         user.password = yield bcrypt_1.default.hash(user.password, Number(config_1.default.bcrypt_salt_rounds));
         next();
     });
