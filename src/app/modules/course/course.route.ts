@@ -21,6 +21,7 @@ router.get(
 router.put(
   '/api/courses/:courseId',
   auth('admin'),
+  validateRequest(courseValidation.courseUpdateValidationSchema),
   CourseControllers.updateCourse,
 );
 
